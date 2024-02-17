@@ -41,9 +41,15 @@ body {
         width: 330px;
         height: 60px;
         border: 4px solid white;
-        padding: 10px 20px;
+        padding: 10px 16px;
         border-radius: 5px;
         position: relative;
+        margin-bottom: 20px;
+    }
+
+    .upgrade:hover {
+        opacity: 0.85;
+        cursor: pointer;
     }
 
     .mid-selection h4 {
