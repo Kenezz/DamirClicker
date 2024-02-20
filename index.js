@@ -14,6 +14,11 @@ let markIncrease = document.querySelector('.mark-increase')
 let parsedMarkIncrease = parseFloat(markIncrease.innerHTML)
 
 let gpc = 1;
+let gps = 0
+
+let gpcText = document.getElementById("gpc-text")
+let gpsText = document.getElementById("gps-text")
+
 
 function incrementDamir() {
     damir.innerHTML = Math.round(parsedDamir +=gpc)
@@ -26,11 +31,11 @@ function buyClicker() {
 
         clickerLevel.innerHTML ++
 
-        parsedClickerIncrease = parseFloat((parsedClickerIncrease * 1.03).toFixed(2))
+        parsedClickerIncrease = parseFloat((parsedClickerIncrease * 1.01).toFixed(2))
         clickerIncrease.innerHTML = parsedClickerIncrease
         gpc += parsedClickerIncrease
 
-        parsedClickerCost *= 1.18;
+        parsedClickerCost *= 1.36;
         clickerCost.innerHTML = Math.round(parsedClickerCost)
     }
 
@@ -46,11 +51,35 @@ function buyMark() {
 
         parsedMarkIncrease = parseFloat((parsedMarkIncrease * 1.03).toFixed(2))
         markIncrease.innerHTML = parsedMarkIncrease
-        gpc += parsedMarkIncrease
+        gps += parsedMarkIncrease
 
-        parsedMarkCost *= 1.18;
+        parsedMarkCost *= 1.12;
         markCost.innerHTML = Math.round(parsedMarkCost)
     }
+
+
+
+}
+
+setInterval(() => {
+    parsedDamir += gps
+    damir.innerHTML = Math.round(parsedDamir)
+    gpcText.innerHTML  = Math.round(gpc)
+    gpsText.innerHTML = Math.round(gps)
+}, 1000)
+
+
+
+
+
+
+function save () {
+    localStorage.clear()
+
+
+}
+
+function load () {
 
 
 

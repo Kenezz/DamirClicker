@@ -10,7 +10,7 @@
   <section>
     <div class = "main">
       <div class = "left">
-        <h3>Дамир: <span class = "damir-value">0</span></h3>
+        <p>Дамиры <br /><span class = "damir-value damirs-text">0</span></p>
         <img src="sticker.png" alt = "" srcset="" class = "damir-image" onclick="incrementDamir()" draggable="false">
       </div>
       <div class = "right">
@@ -23,7 +23,7 @@
           <div class = "mid-selection">
             <h4>Анальный бурильщик</h4>
             <div class = "cost-info">
-              <p>Цена: <span class = "clicker-cost">10</span></p>
+              <p class = "cost-text"><span class = "clicker-cost">10</span></p>
               <img src = "sticker.png" alt = "" srcset="" class = "damir-img">
             </div>
           </div>
@@ -33,7 +33,7 @@
 
           <div class = "next-lvl-info">
             <p>
-              +<span class = "clicker-increase">1</span> Дамиров <br /> в секунду
+              +<span class = "clicker-increase">1</span> Дамиров <br /> за клик
             </p>
           </div>
           </div>
@@ -51,7 +51,7 @@
           <div class = "mid-selection">
             <h4>Вагинальный бурильщик</h4>
             <div class = "cost-info">
-              <p>Цена: <span class = "mark-cost">150</span></p>
+              <p class = "cost-text"><span class = "mark-cost">150</span></p>
               <img src = "sticker.png" alt = "" srcset="" class = "damir-img">
             </div>
           </div>
@@ -72,6 +72,27 @@
         
       </div>
     </div>
+
+    <div class = "statistics">
+      <div class = "texts">
+        <p>DPS: <span id = "gps-text" class = "damirs-text">0</span></p>
+        <p>DPC: <span id = "gpc-text" class = "damirs-text">1</span></p>
+      </div>
+
+
+    </div>
+
+    <div class="util-buttons">
+      <button class="util-button" onclick="save()">
+        Save
+      </button>
+      <button class="util-button" oneclick ="load()">
+        Load
+
+      </button>
+
+    </div>
+  
   </section>
 
   <script src = "index.js"></script>
