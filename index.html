@@ -11,10 +11,15 @@
     <div class = "main">
       <div class = "left">
         <p>Дамиры <br /><span class = "damir-value damirs-text">0</span></p>
-        <img src="sticker.png" alt = "" srcset="" class = "damir-image" onclick="incrementDamir()" draggable="false">
+        <div class = "damir-img-container">
+          <img src="sticker.png" alt = "" srcset="" class = "damir-image" onclick="incrementDamir(event)" draggable="false">
+          
+        </div>
+        
       </div>
+
       <div class = "right">
-        <div class="upgrade" onclick="buyClicker()">
+        <div class="upgrade" onclick="buyUpgrade('clicker')">
           <div class = "left-selection">
             <img src = "davidschol.png" alt="" class = "upgrade-img">
 
@@ -42,7 +47,7 @@
 
 
 
-        <div class="upgrade" onclick="buyMark()">
+        <div class="upgrade" onclick="buyUpgrade('mark')">
           <div class = "left-selection">
             <img src = "markupgrade.png" alt="" class = "upgrade-img">
 
@@ -51,7 +56,7 @@
           <div class = "mid-selection">
             <h4>Вагинальный бурильщик</h4>
             <div class = "cost-info">
-              <p class = "cost-text"><span class = "mark-cost">150</span></p>
+              <p class = "cost-text"><span class = "mark-cost">100</span></p>
               <img src = "sticker.png" alt = "" srcset="" class = "damir-img">
             </div>
           </div>
@@ -86,7 +91,7 @@
       <button class="util-button" onclick="save()">
         Save
       </button>
-      <button class="util-button" oneclick ="load()">
+      <button class="util-button" onclick ="load()">
         Load
 
       </button>
