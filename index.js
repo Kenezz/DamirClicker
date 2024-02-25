@@ -1,65 +1,154 @@
 let damir = document.querySelector('.damir-value')
 let parsedDamir = parseFloat(damir.innerHTML)
 
-let clickerCost = document.querySelector('.clicker-cost')
-let parsedClickerCost = parseFloat(clickerCost.innerHTML)
-let clickerLevel = document.querySelector('.clicker-level')
-let clickerIncrease = document.querySelector('.clicker-increase')
-let parsedClickerIncrease = parseFloat(clickerIncrease.innerHTML)
-
-let markCost = document.querySelector('.mark-cost')
-let parsedMarkCost = parseFloat(markCost.innerHTML)
-let markLevel = document.querySelector('.mark-level')
-let markIncrease = document.querySelector('.mark-increase')
-let parsedMarkIncrease = parseFloat(markIncrease.innerHTML)
 
 let gpc = 1;
 let gps = 0
+
+let damirImgContainer = document.querySelector('.damir-img-container')
 
 let gpcText = document.getElementById("gpc-text")
 let gpsText = document.getElementById("gps-text")
 
 
-function incrementDamir() {
+
+const upgrades  = [
+    {
+        name: 'clicker',
+        cost: document.querySelector(".clicker-cost"),
+        parsedCost: parseFloat(document.querySelector(".clicker-cost").innerHTML),
+        increase: document.querySelector(".clicker-increase"),
+        parsedIncrease: parseFloat(document.querySelector(".clicker-increase").innerHTML),
+        level: document.querySelector(".clicker-level"),
+        damirMultiplier: 1.01,
+        costMultiplier: 1.10,
+
+    },
+
+    {
+        name: 'mark',
+        cost: document.querySelector(".mark-cost"),
+        parsedCost: parseFloat(document.querySelector(".mark-cost").innerHTML),
+        increase: document.querySelector(".mark-increase"),
+        parsedIncrease: parseFloat(document.querySelector(".mark-increase").innerHTML),
+        level: document.querySelector(".mark-level"),
+        damirMultiplier: 1.025,
+        costMultiplier: 1.10,
+
+    }
+
+
+]
+console.log(upgrades[0])
+
+
+function incrementDamir(event) {
     damir.innerHTML = Math.round(parsedDamir +=gpc)
 
+    const x = event.offsetX
+    const y = event.offsetY
+
+    const div = document.createElement('div')
+    div.innerHTML = `+${Math.round(gpc)}`
+    div.style.cssText = `color: white; position: absolute; top: ${y}px; left ${x}px; font-size: 15px; pointer-events: none;`
+    damirImgContainer.appendChild(div)
+
+    div.classList.add('fade-up')
+
+    console.log(div)
+
+    timeout(div)
+
 }
 
-function buyClicker() {
-    if (parsedDamir >= parsedClickerCost) {
-        damir.innerHTML = Math.round(parsedDamir -= parsedClickerCost)
 
-        clickerLevel.innerHTML ++
+const timeout = (div) => {
+    setTimeout(() => {
+        div.remove()
+    }, 800)
+    
 
-        parsedClickerIncrease = parseFloat((parsedClickerIncrease * 1.01).toFixed(2))
-        clickerIncrease.innerHTML = parsedClickerIncrease
-        gpc += parsedClickerIncrease
+}
 
-        parsedClickerCost *= 1.36;
-        clickerCost.innerHTML = Math.round(parsedClickerCost)
+
+
+function buyUpgrade(upgrade) {
+    const mu = upgrades.find((u) => {
+        if (u.name === upgrade) return u
+    })
+    if (parsedDamir >= mu.parsedCost) {
+        damir.innerHTML = Math.round(parsedDamir -= mu.parsedCost)
+        mu.level.innerHTML ++
+        mu.parsedIncrease = parseFloat((mu.parsedIncrease * mu.damirMultiplier).toFixed(2))
+        mu.increase.innerHTML = mu.parsedIncrease
+        gpc += mu.parsedIncrease
+
+        mu.parsedCost *= mu.costMultiplier
+        mu.cost.innerHTML = Math.round(mu.parsedCost)
+
+        if (mu.name === 'clicker') {
+            gpc += mu.parsedIncrease
+        } else {
+            gps += mu.parsedIncrease
+        }
     }
+    
+  
+
+}
+
+
+
+
+
+function save () {
+    localStorage.clear()
+
+    upgrades.map((upgrade) => {
+        const obj = JSON.stringify({
+            parsedLevel: parseFloat(upgrade.level.innerHTML),
+            parsedCost: upgrade.parsedCost,
+            parsedIncrease: upgrade.parsedIncrease
+        }) 
+
+        localStorage.setItem(upgrade.name, obj)
+
+    })
+
+    localStorage.setItem('gpc', JSON.stringify(gpc))
+    localStorage.setItem('gps', JSON.stringify(gps))
+    localStorage.setItem('damir', JSON.stringify(parsedDamir))
+
+
+}
+
+function load () {
+    upgrades.map((upgrade) => {
+        const savedValues = JSON.parse(localStorage.getItem(upgrade.name))
+
+        console.log(upgrade.name, savedValues)
+
+        upgrade.parsedCost = savedValues.parsedCost
+        upgrade.parsedIncrease = savedValues.parsedIncrease
+
+        upgrade.level.innerHTML = savedValues.parsedLevel
+        upgrade.cost.innerHTML = Math.round(upgrade.parsedCost)
+        upgrade.increase.innerHTML = upgrade.parsedIncrease
+
+    })
+
+    gpc = JSON.parse(localStorage.getItem('gpc'))
+    gps = JSON.parse(localStorage.getItem('gps'))
+    parsedDamir = JSON.parse(localStorage.getItem('damir'))
+
+    damir.innerHTML = Math.round(parsedDamir)
+
 
 
 
 }
 
-function buyMark() {
-    if (parsedDamir >= parsedMarkCost) {
-        damir.innerHTML = Math.round(parsedDamir -= parsedMarkCost)
 
-        markLevel.innerHTML ++
-
-        parsedMarkIncrease = parseFloat((parsedMarkIncrease * 1.03).toFixed(2))
-        markIncrease.innerHTML = parsedMarkIncrease
-        gps += parsedMarkIncrease
-
-        parsedMarkCost *= 1.12;
-        markCost.innerHTML = Math.round(parsedMarkCost)
-    }
-
-
-
-}
 
 setInterval(() => {
     parsedDamir += gps
@@ -73,14 +162,3 @@ setInterval(() => {
 
 
 
-function save () {
-    localStorage.clear()
-
-
-}
-
-function load () {
-
-
-
-}
